@@ -4,6 +4,7 @@ import App from "./App.jsx";
 import { Provider } from "react-redux";
 import store from "./redux/store/index.js";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "react-phone-input-2/lib/style.css";
 import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

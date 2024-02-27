@@ -21,14 +21,18 @@ const UsersList = () => {
   }, []);
 
   const handleFetchUsers = async () => {
-    if (!users.length) {
-      setLoading(true);
-      const usersResp = await getUsers();
-      console.log("usersResp", usersResp);
-      setLoading(false);
-      if (usersResp && usersResp.length) {
-        dispatch(setUsers(usersResp));
+    try {
+      if (!users.length) {
+        setLoading(true);
+        const usersResp = await getUsers();
+        console.log("usersResp", usersResp);
+        setLoading(false);
+        if (usersResp && usersResp.length) {
+          dispatch(setUsers(usersResp));
+        }
       }
+    } catch (error) {
+      setLoading(false);
     }
   };
 
@@ -39,7 +43,11 @@ const UsersList = () => {
         {(searchedUsers.length ? searchedUsers : users)?.map((user) => (
           <User user={user} modal={openUserModal} setModal={setOpenUserModal} />
         ))}
-        {loading ? <Spinner className="mt-4" /> : null}
+        {loading ? (
+          <Spinner className="mt-4" />
+        ) : !searchedUsers.length || !users.length ? (
+          <h4 style={{ marginTop: "100px" }}>No Users Found!</h4>
+        ) : null}
       </div>
     </>
   );
